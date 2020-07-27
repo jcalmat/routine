@@ -1,4 +1,4 @@
-name: golangci-lint
+name: github-ci
 
 on: [push, pull_request]
 
@@ -12,3 +12,10 @@ jobs:
         uses: golangci/golangci-lint-action@v1
         with:
           version: v1.29
+  cover:
+    name: cover
+    runs-on: ubuntu-latest
+    steps:
+    - name: go tool cover
+      run: |
+        go tool cover -func .coverage.txt ; rm .coverage.txt
