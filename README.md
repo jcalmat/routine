@@ -65,7 +65,7 @@ func FetchDatas(userIDs ...string) ([]Data, error) {
 				Name: usersResp.Name,
 				Email: usersResp.Email,
 			}, nil
-		}
+		})
 	}
 
 	// run the routines and extract the values
