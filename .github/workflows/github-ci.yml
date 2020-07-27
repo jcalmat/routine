@@ -1,17 +1,17 @@
-name: ci
+name: ci-checks
 
 on: [push, pull_request]
 
 jobs:
-  build:
-    name: Build
+  check:
+    name: Check
     runs-on: ubuntu-latest
     steps:
-    - name: Get dependencies
-      env:
-        GO111MODULE: "on"
-      run: |
-        go mod vendor
+    # - name: Get dependencies
+    #   env:
+    #     GO111MODULE: "on"
+    #   run: |
+    #     go mod vendor
     - name: Lint check
       run: |
         golangci-lint run
