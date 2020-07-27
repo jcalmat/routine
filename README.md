@@ -1,43 +1,80 @@
 # Routine
 
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/jcalmat/routine)
-![Coverage](https://img.shields.io/codecov/c/github/jcalmat/routine)
-
 
 Routine offers a convenient way to use basic goroutines without dealing with channels or waitgroups.
 
-## Usage
+## When would you use it?
 
-```go    
-import "github.com/jcalmat/routine"
+If you need to do some heavy computations repetitively typically inside a loop, you might want to use golang concurrency patterns to increase your performances. Unfortunately sometimes using the goroutines, channels and waitgroup syntax could be a bit messy, that's what Routine is for.
+Routine is a very simple abstraction of the concurrency pattern which allows you to make your repetitive pieces of code concurrent.
 
-func main() {
+### Example
 
-	r := routine.NewRoutine()
+If you're working in a microservice architecture and have to loop through a list of IDs to fetch some data from other microservices, you'll may want to make a loop fetching each data individually. Depending on your set of IDs' length, this small code could take a while to execute.
 
-	sample := []int{1, 2, 4, 8, 16, 32, 64, 128}
+```go
+type Data struct {
+	Name  string
+	Email string
+}
 
-	for _, s := range sample {
-		s := s
-		r.Add(func() (routine.Interface, error) {
-			// do some heavy computations/API calls/etc
-			return s + 42, nil
+func FetchDatas(userIDs ...string) ([]Data, error) {
+	datas := make([]Data, 0)
+
+	for _, id := range userIDs {
+        id := id //shadow
+
+        // perform the calls one by one
+		usersResp, err := users.Fetch(id)
+		if err != nil {
+			return nil, err
+		}
+		datas = append(datas, Data{
+			Name: usersResp.Name,
+			Email: usersResp.Email,
 		})
 	}
 
-	r.Run()
-	r.Wait()
-    
-    fmt.Println(r.Extract()) // [50 58 74 106 170 43 44 46] []
+	return datas, nil
 }
 ```
 
-If you need to assert the interface array to a specific type, consider looping through the result and assert the values as needed
+In this case, in order to increase the performances, you could use Routine to make all the calls concurrent
 
 ```go
-	custom := make([]int, 0)
-	for _, v := range res {
-		custom = append(custom, v.(int))
+import "github.com/jcalmat/routine"
+
+func FetchDatas(userIDs ...string) ([]Data, error) {
+	// init the routine
+	r := routine.NewRoutine()
+
+	for _, id := range userIDs {
+		id := id // shadow
+
+		// add each method without executing the code yet
+		r.Add(func() (routine.Interface, error) {
+			usersResp, err := users.Fetch(id)
+			if err != nil {
+				return nil, err
+			}
+			return Data{
+				Name: usersResp.Name,
+				Email: usersResp.Email,
+			}, nil
+		}
 	}
-	fmt.Println(custom)
+
+	// run the routines and extract the values
+	res, errs := r.Run()
+    datas := make([]Data, 0)
+
+    // if you need to assert the interface array to a specific type, consider looping through the result and assert the values as needed
+	for _, v := range res {
+		datas = append(datas, v.(Data))
+	}
+
+	// return
+    return datas, errs.First()
+}
 ```
