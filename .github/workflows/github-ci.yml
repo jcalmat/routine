@@ -16,6 +16,7 @@ jobs:
     name: test
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v2
     - name: go test
       run: |
         pwd && ls -a && go test -race -v -coverprofile .coverage.txt ./...
