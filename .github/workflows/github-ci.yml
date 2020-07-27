@@ -3,6 +3,16 @@ name: github-ci
 on: [push, pull_request]
 
 jobs:
+  dependencies:
+    name: vendor
+    runs-on: ubuntu-latest
+    env:
+      GO111MODULE: "on"
+    steps:
+      - uses: actions/checkout@v2
+      - name: go mod vendor
+        run: |
+          go mod vendor
   golangci:
     name: lint
     runs-on: ubuntu-latest
