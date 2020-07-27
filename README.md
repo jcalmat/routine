@@ -68,9 +68,9 @@ func FetchDatas(userIDs ...string) ([]Data, error) {
 
 	// run the routines and extract the values
 	res, errs := r.Run()
-    datas := make([]Data, 0)
+	datas := make([]Data, 0)
 
-    // if you need to assert the interface array to a specific type, consider looping through the result and assert the values as needed
+	// if you need to assert the interface array to a specific type, consider looping through the result and assert the values as needed
 	for _, v := range res {
 		datas = append(datas, v.(Data))
 	}
