@@ -16,6 +16,8 @@ jobs:
     name: test
     runs-on: ubuntu-latest
     steps:
+    env:
+      working-directory: .
     - name: go test
       run: |
-        go test -race -v -coverprofile .coverage.txt ../../...
+        pwd && ls -a && go test -race -v -coverprofile .coverage.txt ./...
