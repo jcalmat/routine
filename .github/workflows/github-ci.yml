@@ -1,20 +1,29 @@
-name: ci-checks
+# name: ci-checks
 
-on: [push, pull_request]
+# on: [push, pull_request]
 
-jobs:
-  check:
-    name: Check
-    runs-on: ubuntu-latest
-    steps:
-    # - name: Get dependencies
-    #   env:
-    #     GO111MODULE: "on"
-    #   run: |
-    #     go mod vendor
-    - name: Lint check
-      run: |
-        golangci-lint run
-    - name: Run tests
-      run: |
-        go tool cover -func .coverage.txt ; rm .coverage.txt
+# jobs:
+#   golangci-lint:
+#   name: golangci-lint
+#   runs-on: ubuntu-latest
+#   steps:
+#     - uses: actions/checkout@v2
+#     - name: lint
+#       uses: golangci/golangci-lint-action@v2
+#       with:
+#         version: v1.28
+#   # check:
+#   #   name: Check
+#   #   runs-on: ubuntu-latest
+#   #   steps:
+#   #   # - name: Get dependencies
+#   #   #   env:
+#   #   #     GO111MODULE: "on"
+#   #   #   run: |
+#   #   #     go mod vendor
+#   #   - name: Lint check
+#   #     run: |
+#   #       golangci-lint run
+#   #   - name: Run tests
+#   #     run: |
+#   #       go tool cover -func .coverage.txt ; rm .coverage.txt
