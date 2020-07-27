@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Get dependencies
+      env:
+        GO111MODULE: "on"
       run: |
         go mod vendor
     - name: Lint check
