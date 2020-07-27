@@ -1,4 +1,4 @@
-name: github-ci
+name: tests
 
 on: [push, pull_request]
 
@@ -13,15 +13,6 @@ jobs:
       - name: go mod vendor
         run: |
           go mod vendor
-  golangci:
-    name: lint
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: golangci-lint
-        uses: golangci/golangci-lint-action@v1
-        with:
-          version: v1.29
   test:
     name: test
     runs-on: ubuntu-latest

@@ -2,6 +2,8 @@
 
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/jcalmat/routine)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![Linter](https://github.com/jcalmat/routine/workflows/golangci-lint/badge.svg)
+![Unit tests](https://github.com/jcalmat/routine/workflows/tests/badge.svg)
 
 Routine offers a convenient way to use basic goroutines without dealing with channels or waitgroups.
 
