@@ -1,4 +1,4 @@
-package sideroutine
+package routine
 
 // Interface redefines interface{} type for the sake of code lisibility
 type Interface interface{}

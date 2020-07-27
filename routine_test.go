@@ -1,4 +1,4 @@
-package sideroutine
+package routine
 
 import (
 	"errors"
