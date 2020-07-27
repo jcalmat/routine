@@ -1,0 +1,13 @@
+name: ci
+
+on: [push, pull_request]
+
+jobs:
+  check:
+    name: Check
+    runs-on: ubuntu-latest
+    steps:
+      env:
+        GO111MODULE: "on"
+      run: |
+        make check
