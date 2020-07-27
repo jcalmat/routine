@@ -1,0 +1,23 @@
+name: tests
+
+on: [push, pull_request]
+
+jobs:
+  dependencies:
+    name: vendor
+    runs-on: ubuntu-latest
+    env:
+      GO111MODULE: "on"
+    steps:
+      - uses: actions/checkout@v2
+      - name: go mod vendor
+        run: |
+          go mod vendor
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: go test
+      run: |
+        go test -race -v -coverprofile .coverage.txt ./...
