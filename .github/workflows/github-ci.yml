@@ -3,11 +3,16 @@ name: ci
 on: [push, pull_request]
 
 jobs:
-  check:
-    name: Check
+  build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
-      env:
-        GO111MODULE: "on"
+    - name: Get dependencies
       run: |
-        make check
+        go mod vendor
+    - name: Lint check
+      run: |
+        golangci-lint run
+    - name: Run tests
+      run: |
+        go tool cover -func .coverage.txt ; rm .coverage.txt
