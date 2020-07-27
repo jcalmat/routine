@@ -12,10 +12,10 @@ jobs:
         uses: golangci/golangci-lint-action@v1
         with:
           version: v1.29
-  cover:
-    name: cover
+  test:
+    name: test
     runs-on: ubuntu-latest
     steps:
-    - name: go tool cover
+    - name: go test
       run: |
-        go tool cover -func .coverage.txt ; rm .coverage.txt
+        go test -race -v -coverprofile .coverage.txt ./...
