@@ -1,6 +1,7 @@
 # Routine
 
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/jcalmat/routine)
+![License](https://img.shields.io/github/license/jcalmat/routine)
 
 Routine offers a convenient way to use basic goroutines without dealing with channels or waitgroups.
 
