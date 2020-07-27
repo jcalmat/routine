@@ -64,9 +64,7 @@ func TestRoutine(t *testing.T) {
 		t.Run(data.name, func(t *testing.T) {
 			r := NewRoutine()
 			r.Add(data.input...)
-			r.Run()
-			r.Wait()
-			res, errs := r.Extract()
+			res, errs := r.Run()
 			assert.ElementsMatch(t, data.res, res)
 			assert.ElementsMatch(t, data.errors, errs)
 

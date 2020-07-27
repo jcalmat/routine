@@ -13,22 +13,22 @@ import "github.com/jcalmat/routine"
 
 func main() {
 
-	routine := routine.NewRoutine()
+	r := routine.NewRoutine()
 
 	sample := []int{1, 2, 4, 8, 16, 32, 64, 128}
 
 	for _, s := range sample {
 		s := s
-		routine.Add(func() (Interface, error) {
+		r.Add(func() (routine.Interface, error) {
 			// do some heavy computations/API calls/etc
 			return s + 42, nil
 		})
 	}
 
-	routine.Run()
-	routine.Wait()
+	r.Run()
+	r.Wait()
     
-    fmt.Println(routine.Extract()) // [50 58 74 106 170 43 44 46] []
+    fmt.Println(r.Extract()) // [50 58 74 106 170 43 44 46] []
 }
 ```
 

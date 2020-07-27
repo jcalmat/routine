@@ -45,22 +45,30 @@ func (r *R) Add(methods ...func() (Interface, error)) {
 }
 
 // Run executes all the routines stacked in r
-func (r *R) Run() {
+// waits until they're done executing, close the channels and returns their result
+func (r *R) Run() ([]interface{}, Errors) {
+	r.exec()
+	r.wait()
+	return r.extract()
+}
+
+// exec executes all the routines stacked in r
+func (r *R) exec() {
 	for _, m := range r.methods {
 		m()
 	}
 }
 
-// Wait waits for all the goroutines to be done before closing the result channel
-func (r *R) Wait() {
+// wait waits for all the goroutines to be done before closing the result channel
+func (r *R) wait() {
 	go func() {
 		r.wg.Wait()
 		close(r.result)
 	}()
 }
 
-// Extract extracts the datas stored in the result channel
-func (r *R) Extract() ([]interface{}, Errors) {
+// extract extracts the datas stored in the result channel
+func (r *R) extract() ([]interface{}, Errors) {
 	var result []interface{}
 	var errors Errors
 
@@ -73,12 +81,4 @@ func (r *R) Extract() ([]interface{}, Errors) {
 		}
 	}
 	return result, errors
-}
-
-// Flush flushes any channel and buffered methods to the underlying routine
-func (r *R) Flush() {
-	r.methods = make([]func(), 0)
-	for len(r.result) > 0 {
-		<-r.result
-	}
 }
