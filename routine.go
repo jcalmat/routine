@@ -11,7 +11,7 @@ type R struct {
 	result  chan result
 }
 
-// Result represents a sideroutine.goroutine response type
+// Result represents a routine.goroutine response type
 type result struct {
 	result interface{}
 	errors error
