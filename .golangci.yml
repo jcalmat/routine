@@ -1,5 +1,3 @@
-# Side's .golang-ci.yml ™
-
 # options for analysis running
 run:
   # available CPUs number
@@ -46,7 +44,7 @@ run:
   goimports:
     # put imports beginning with prefix after 3rd-party packages;
     # it's a comma-separated list of prefixes
-    local-prefixes: gitlab.side.co
+    local-prefixes: github.com
 
   # Go linter that checks if package imports are in a list of acceptable packages
   depguard:
